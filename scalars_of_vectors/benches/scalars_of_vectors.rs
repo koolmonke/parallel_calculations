@@ -1,5 +1,6 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use rand::{thread_rng, Rng};
+use rand::distributions::{Distribution, Uniform};
+use rand::thread_rng;
 use scalars_of_vectors::*;
 
 fn make_pool(num_threads: usize) -> rayon::ThreadPool {
@@ -10,8 +11,9 @@ fn make_pool(num_threads: usize) -> rayon::ThreadPool {
 }
 
 fn generate_vector(n: usize) -> Vec<i32> {
+    let between = Uniform::from(0..10_000);
     let mut rng = thread_rng();
-    (0..n).map(|_| rng.gen()).collect()
+    between.sample_iter(&mut rng).take(n).collect()
 }
 
 static VECTOR_SIZE: usize = 600_000_000;
@@ -22,7 +24,6 @@ fn scalar_tests(c: &mut Criterion) {
     let pool1 = make_pool(1);
     let pool4 = make_pool(4);
     let pool8 = make_pool(8);
-    let pool12 = make_pool(12);
     let pool16 = make_pool(16);
 
     c.bench_function("scalar 1 thread", |bencher| {
@@ -38,11 +39,6 @@ fn scalar_tests(c: &mut Criterion) {
     c.bench_function("scalar 8 thread", |bencher| {
         bencher.iter(|| {
             let _t = pool8.install(|| scalar(&a, &b));
-        })
-    });
-    c.bench_function("scalar 12 thread", |bencher| {
-        bencher.iter(|| {
-            let _t = pool12.install(|| scalar(&a, &b));
         })
     });
     c.bench_function("scalar 16 thread", |bencher| {
