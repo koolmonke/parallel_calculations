@@ -9,12 +9,12 @@ fn make_pool(num_threads: usize) -> rayon::ThreadPool {
         .unwrap()
 }
 
-fn generate_vector(n: usize) -> Vec<f64> {
+fn generate_vector(n: usize) -> Vec<i32> {
     let mut rng = thread_rng();
     (0..n).map(|_| rng.gen()).collect()
 }
 
-static VECTOR_SIZE: usize = 300_000_000;
+static VECTOR_SIZE: usize = 600_000_000;
 
 fn scalar_tests(c: &mut Criterion) {
     let a = black_box(generate_vector(VECTOR_SIZE));
