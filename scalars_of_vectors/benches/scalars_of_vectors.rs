@@ -14,7 +14,7 @@ fn generate_vector(n: usize) -> Vec<f64> {
     (0..n).map(|_| rng.gen()).collect()
 }
 
-static VECTOR_SIZE: usize = 3_500_000;
+static VECTOR_SIZE: usize = 300_000_000;
 
 fn scalar_tests(c: &mut Criterion) {
     let a = black_box(generate_vector(VECTOR_SIZE));
