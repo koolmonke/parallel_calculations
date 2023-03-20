@@ -16,7 +16,7 @@ fn generate_vector(n: usize) -> Vec<i32> {
     between.sample_iter(&mut rng).take(n).collect()
 }
 
-static VECTOR_SIZE: usize = 600_000_000;
+const VECTOR_SIZE: usize = 600_000_000;
 
 fn scalar_tests(c: &mut Criterion) {
     let a = black_box(generate_vector(VECTOR_SIZE));
