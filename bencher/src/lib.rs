@@ -11,9 +11,9 @@ fn make_pool(num_threads: usize) -> rayon::ThreadPool {
         .unwrap()
 }
 
-pub fn bench_rayon_single_threaded<F: FnOnce() -> () + Send>(f: F) -> BenchResult {
+pub fn bench_rayon_single_threaded<F: FnOnce() + Send>(f: F) -> BenchResult {
     let start_time = SystemTime::now();
-    make_pool(1).install(move || f());
+    make_pool(1).install(f);
     let end_time = SystemTime::now();
     let duration = end_time.duration_since(start_time).unwrap();
     BenchResult {
@@ -24,13 +24,13 @@ pub fn bench_rayon_single_threaded<F: FnOnce() -> () + Send>(f: F) -> BenchResul
     }
 }
 
-pub fn bench_rayon<F: FnOnce() -> () + Send>(
+pub fn bench_rayon<F: FnOnce() + Send>(
     n: usize,
     f: F,
     duration_of_single_threaded: &Duration,
 ) -> BenchResult {
     let start_time = SystemTime::now();
-    make_pool(n).install(move || f());
+    make_pool(n).install(f);
     let end_time = SystemTime::now();
     let duration = end_time.duration_since(start_time).unwrap();
     let speedup = duration_of_single_threaded.as_secs_f64() / duration.as_secs_f64();

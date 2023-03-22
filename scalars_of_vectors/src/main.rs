@@ -21,7 +21,7 @@ fn generate_vector(n: usize) -> Vec<i64> {
     v
 }
 
-fn ten_scaler<'a, T: Send + Sync + Sum<T>>(v1: &'a Vec<T>, v2: &'a Vec<T>) -> ()
+fn ten_scaler<'a, T: Send + Sync + Sum<T>>(v1: &'a Vec<T>, v2: &'a Vec<T>)
 where
     &'a T: Mul<Output = T>,
 {
