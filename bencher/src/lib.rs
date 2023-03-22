@@ -57,7 +57,7 @@ pub fn bench_rayon_single_threaded<F: FnOnce() -> () + Send>(f: F) -> BenchResul
 pub fn bench_rayon<F: FnOnce() -> () + Send>(
     n: usize,
     f: F,
-    duration_of_single_threaded: Duration,
+    duration_of_single_threaded: &Duration,
 ) -> BenchResult {
     let start_time = SystemTime::now();
     make_pool(n).install(move || f());

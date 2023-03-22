@@ -21,12 +21,12 @@ fn generate_vector(n: usize) -> Vec<i64> {
     v
 }
 
-pub fn ten_scaler<'a, T: Send + Sync + Sum<T>>(v1: &'a Vec<T>, v2: &'a Vec<T>) -> ()
+fn ten_scaler<'a, T: Send + Sync + Sum<T>>(v1: &'a Vec<T>, v2: &'a Vec<T>) -> ()
 where
     &'a T: Mul<Output = T>,
 {
     for _ in 0..10 {
-        scalar(v1, v2);
+        let _ = scalar(v1, v2);
     }
 }
 
@@ -38,17 +38,15 @@ fn main() {
         ten_scaler(a, b);
     });
 
-    println!("{}", bench_result_single_threaded);
-    println!("");
+    println!("{}\n", bench_result_single_threaded);
     for i in THREAD_COUNT {
         let bench_result = bench_rayon(
             i,
             move || {
                 ten_scaler(a, b);
             },
-            bench_result_single_threaded.duration,
+            &bench_result_single_threaded.duration,
         );
-        println!("{}", bench_result);
-        println!("");
+        println!("{}\n", bench_result);
     }
 }
