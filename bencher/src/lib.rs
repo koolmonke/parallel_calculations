@@ -17,8 +17,8 @@ pub fn bench_rayon_single_threaded<F: FnOnce() -> () + Send>(f: F) -> BenchResul
     let end_time = SystemTime::now();
     let duration = end_time.duration_since(start_time).unwrap();
     BenchResult {
-        thread_count: 1,
         duration,
+        thread_count: 1,
         speedup: None,
         effectiveness: None,
     }
@@ -37,8 +37,8 @@ pub fn bench_rayon<F: FnOnce() -> () + Send>(
     let effectiveness = speedup / (n as f64);
 
     BenchResult {
-        thread_count: n,
         duration,
+        thread_count: n,
         speedup: Some(speedup),
         effectiveness: Some(effectiveness),
     }
