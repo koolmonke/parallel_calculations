@@ -2,16 +2,24 @@ use std::{iter::Sum, ops::Mul};
 
 use bencher::{bench_rayon, bench_rayon_single_threaded};
 use rand::{distributions::Uniform, prelude::Distribution, thread_rng};
+use rayon::prelude::*;
 use scalars_of_vectors::scalar;
 
-fn generate_vector(n: usize) -> Vec<i32> {
-    let between = Uniform::from(0..10_000);
-    let mut rng = thread_rng();
-    between.sample_iter(&mut rng).take(n).collect()
-}
-
-const VECTOR_SIZE: usize = 600_000_000;
+const VECTOR_SIZE: usize = 200_000_000;
 const THREAD_COUNT: [usize; 3] = [4, 8, 16];
+
+fn generate_vector(n: usize) -> Vec<i64> {
+    let between = Uniform::from(0..10_000);
+    let mut v = Vec::with_capacity(n);
+    (0..n)
+        .into_par_iter()
+        .map(|_| {
+            let mut rng = thread_rng();
+            between.sample(&mut rng)
+        })
+        .collect_into_vec(&mut v);
+    v
+}
 
 pub fn ten_scaler<'a, T: Send + Sync + Sum<T>>(v1: &'a Vec<T>, v2: &'a Vec<T>) -> ()
 where
