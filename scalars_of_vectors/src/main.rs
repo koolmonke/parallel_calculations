@@ -1,6 +1,6 @@
 use std::{iter::Sum, ops::Mul};
 
-use bencher::{bench_rayon, bench_rayon_single_threaded};
+use bencher::rayon::{bench, bench_single_threaded};
 use rand::{distributions::Uniform, prelude::Distribution, thread_rng};
 use rayon::prelude::*;
 use scalars_of_vectors::scalar;
@@ -34,18 +34,18 @@ fn main() {
     let a = &generate_vector(VECTOR_SIZE);
     let b = &generate_vector(VECTOR_SIZE);
 
-    let bench_result_single_threaded = bench_rayon_single_threaded(move || {
+    let bench_result_single_threaded = bench_single_threaded(move || {
         ten_scaler(a, b);
     });
 
     println!("{}\n", bench_result_single_threaded);
-    for i in THREAD_COUNT {
-        let bench_result = bench_rayon(
-            i,
+    for thread_count in THREAD_COUNT {
+        let bench_result = bench(
             move || {
                 ten_scaler(a, b);
             },
-            &bench_result_single_threaded.duration,
+            thread_count,
+            &bench_result_single_threaded,
         );
         println!("{}\n", bench_result);
     }
