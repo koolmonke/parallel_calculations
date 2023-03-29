@@ -9,6 +9,7 @@ pub struct BenchResultMultiThreaded {
     pub duration: Duration,
     pub speedup: f64,
     pub effectiveness: f64,
+    pub repeat_count: i32,
 }
 
 impl Display for BenchResultMultiThreaded {
@@ -24,6 +25,12 @@ impl Display for BenchResultMultiThreaded {
             f,
             "Время выполнения: {:.5} секунд",
             self.duration.as_secs_f64()
+        )?;
+        writeln!(f, "Кол-во выполнений {}", self.repeat_count)?;
+        writeln!(
+            f,
+            "Среднеее время выполнение {:.5} секунд",
+            self.duration.as_secs_f64() / (self.repeat_count as f64)
         )?;
 
         writeln!(f, "Ускорение: {:.5}", self.speedup)?;

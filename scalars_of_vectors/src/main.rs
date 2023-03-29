@@ -34,9 +34,12 @@ fn main() {
     let a = &generate_vector(VECTOR_SIZE);
     let b = &generate_vector(VECTOR_SIZE);
 
-    let bench_result_single_threaded = bench_single_threaded(move || {
-        ten_scaler(a, b);
-    });
+    let bench_result_single_threaded = bench_single_threaded(
+        move || {
+            ten_scaler(a, b);
+        },
+        10,
+    );
 
     println!("{}\n", bench_result_single_threaded);
     for thread_count in THREAD_COUNT {
@@ -45,6 +48,7 @@ fn main() {
                 ten_scaler(a, b);
             },
             thread_count,
+            10,
             &bench_result_single_threaded,
         );
         println!("{}\n", bench_result);
