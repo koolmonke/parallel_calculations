@@ -13,10 +13,7 @@ fn generate_vector(n: usize) -> Vec<i64> {
     let mut v = Vec::with_capacity(n);
     (0..n)
         .into_par_iter()
-        .map(|_| {
-            let mut rng = thread_rng();
-            between.sample(&mut rng)
-        })
+        .map(|_| between.sample(&mut thread_rng()))
         .collect_into_vec(&mut v);
     v
 }
