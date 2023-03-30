@@ -1,5 +1,3 @@
-use std::{iter::Sum, ops::Mul};
-
 use bencher::rayon::{bench, bench_single_threaded};
 use rand::{distributions::Uniform, prelude::Distribution, thread_rng};
 use rayon::prelude::*;
@@ -18,35 +16,26 @@ fn generate_vector(n: usize) -> Vec<i64> {
     v
 }
 
-fn ten_scaler<'a, T: Send + Sync + Sum<T>>(v1: &'a Vec<T>, v2: &'a Vec<T>)
-where
-    &'a T: Mul<Output = T>,
-{
-    for _ in 0..10 {
-        let _ = scalar(v1, v2);
-    }
-}
-
 fn main() {
     let a = &generate_vector(VECTOR_SIZE);
     let b = &generate_vector(VECTOR_SIZE);
 
-    let bench_result_single_threaded = bench_single_threaded(
+    let single_threaded_result = bench_single_threaded(
         move || {
-            ten_scaler(a, b);
+            scalar(a, b);
         },
         10,
     );
 
-    println!("{}\n", bench_result_single_threaded);
+    println!("{}\n", single_threaded_result);
     for thread_count in THREAD_COUNT {
         let bench_result = bench(
             move || {
-                ten_scaler(a, b);
+                scalar(a, b);
             },
             thread_count,
             10,
-            &bench_result_single_threaded,
+            &single_threaded_result,
         );
         println!("{}\n", bench_result);
     }
