@@ -5,6 +5,7 @@ use scalars_of_vectors::scalar;
 
 const VECTOR_SIZE: usize = 200_000_000;
 const THREAD_COUNT: [usize; 3] = [4, 8, 16];
+const REPEAT_COUNT: i32 = 10;
 
 fn generate_vector(n: usize) -> Vec<i64> {
     let between = Uniform::from(0..10_000);
@@ -24,7 +25,7 @@ fn main() {
         move || {
             scalar(a, b);
         },
-        10,
+        REPEAT_COUNT,
     );
 
     println!("{}\n", single_threaded_result);
@@ -34,7 +35,7 @@ fn main() {
                 scalar(a, b);
             },
             thread_count,
-            10,
+            REPEAT_COUNT,
             &single_threaded_result,
         );
         println!("{}\n", bench_result);
