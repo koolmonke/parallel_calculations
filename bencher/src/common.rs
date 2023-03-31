@@ -1,8 +1,7 @@
-use std::time::{Duration, SystemTime};
+use std::time::{Duration, Instant};
 
 pub(crate) fn get_duration<F: FnOnce()>(f: F) -> Duration {
-    let start_time = SystemTime::now();
+    let instant = Instant::now();
     f();
-    let end_time = SystemTime::now();
-    end_time.duration_since(start_time).unwrap()
+    instant.elapsed()
 }
