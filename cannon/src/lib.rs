@@ -15,7 +15,7 @@ fn compute_row_of_sums_rayon(a_row: &Vec<f64>, b: &Vec<Vec<f64>>, n: usize) -> V
         .collect()
 }
 
-pub fn par_par_multiply_a_b_rayon(a: &Vec<Vec<f64>>, b: &Vec<Vec<f64>>) -> Vec<Vec<f64>> {
+pub fn multiply(a: &Vec<Vec<f64>>, b: &Vec<Vec<f64>>) -> Vec<Vec<f64>> {
     let n = b.len();
 
     let mut unordered_rows = (0..n)
