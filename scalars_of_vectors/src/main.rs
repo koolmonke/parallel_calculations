@@ -1,21 +1,10 @@
 use bencher::rayon::{bench, bench_single_threaded};
-use rand::{distributions::Uniform, prelude::Distribution, thread_rng};
-use rayon::prelude::*;
+use common::generate_vector;
 use scalars_of_vectors::scalar;
 
 const VECTOR_SIZE: usize = 200_000_000;
 const THREAD_COUNT: [usize; 3] = [4, 8, 16];
 const REPEAT_COUNT: i32 = 10;
-
-fn generate_vector(n: usize) -> Vec<i64> {
-    let between = Uniform::from(0..10_000);
-    let mut v = Vec::with_capacity(n);
-    (0..n)
-        .into_par_iter()
-        .map(|_| between.sample(&mut thread_rng()))
-        .collect_into_vec(&mut v);
-    v
-}
 
 fn main() {
     let a = &generate_vector(VECTOR_SIZE);
