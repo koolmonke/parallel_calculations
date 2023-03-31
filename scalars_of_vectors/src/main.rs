@@ -9,8 +9,8 @@ const VECTOR_SIZE: usize = 200_000_000;
 const REPEAT_COUNT: i32 = 10;
 
 fn main() {
-    let a = &generate_vector(VECTOR_SIZE, &(0..10_000));
-    let b = &generate_vector(VECTOR_SIZE, &(0..10_000));
+    let a = &generate_vector::<i64>(VECTOR_SIZE, &(0..10_000));
+    let b = &generate_vector::<i64>(VECTOR_SIZE, &(0..10_000));
 
     let single_threaded_result = bench_single_threaded(
         move || {
