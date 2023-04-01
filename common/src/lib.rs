@@ -11,7 +11,7 @@ use rayon::prelude::*;
 pub fn generate_vector<T>(n: usize, range: &Range<T>) -> Vec<T>
 where
     <T as SampleUniform>::Sampler: Sync,
-    T: SampleUniform + From<i32> + Send + Copy,
+    T: SampleUniform + Send + Copy,
 {
     let between = Uniform::from(Range {
         start: range.start.into(),
@@ -28,7 +28,7 @@ where
 pub fn generate_square_matrix<T>(n: usize, range: Range<T>) -> Vec<Vec<T>>
 where
     <T as SampleUniform>::Sampler: Sync,
-    T: SampleUniform + From<i32> + Send + Sync + Copy,
+    T: SampleUniform + Send + Sync + Copy,
 {
     let mut matrix = Vec::with_capacity(n);
 
