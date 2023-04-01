@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 rayon = "1.7"
-bencher = {path = "../bencher"}
-common = {path = "../common"}
+bencher = { path = "../bencher" }
+common = { path = "../common" }
 
 [dev-dependencies]
