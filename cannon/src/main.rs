@@ -1,4 +1,4 @@
-use bencher::{rayon::*, THREAD_COUNT};
+use bencher::rayon::*;
 use cannon::multiply;
 use common::generate_square_matrix;
 
@@ -17,7 +17,7 @@ fn main() {
     );
 
     println!("{}\n", single_threaded_result);
-    for thread_count in THREAD_COUNT {
+    for thread_count in [4, 16] {
         let bench_result = bench(
             move || {
                 multiply(a, b);
