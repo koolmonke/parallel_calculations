@@ -45,7 +45,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_multiply_matrices() {
+    fn test_gauss() {
         let matrix = vec![
             vec![1.0, 2.0, 3.0],
             vec![4.0, 5.0, 6.0],
