@@ -21,17 +21,17 @@ pub fn gauss_elimination(matrix: &Matrix<f64>) -> Matrix<f64> {
 
         let pivot = result[i][i];
 
-        if pivot == 0.0 {
+        if pivot.abs() <= f64::EPSILON {
             panic!("Singular matrix");
         }
 
-        result[i].par_iter_mut().for_each(|x| *x /= pivot);
+        result[i].iter_mut().for_each(|x| *x /= pivot);
 
         for j in (i + 1)..n {
             let factor = result[j][i] / result[i][i];
             result[j] = result[j]
-                .par_iter()
-                .zip(result[i].par_iter())
+                .iter()
+                .zip(result[i].iter())
                 .map(|(&x, &y)| x - y * factor)
                 .collect();
         }
