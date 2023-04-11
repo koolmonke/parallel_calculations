@@ -1,6 +1,6 @@
 use common::matrix::Matrix;
-use std::cmp::Ordering;
 use rayon::prelude::*;
+use std::cmp::Ordering;
 
 pub fn gauss_elimination(matrix: &Matrix<f64>) -> Matrix<f64> {
     let mut result = matrix.clone();
@@ -38,4 +38,25 @@ pub fn gauss_elimination(matrix: &Matrix<f64>) -> Matrix<f64> {
     }
 
     result
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_multiply_matrices() {
+        let matrix = vec![
+            vec![1.0, 2.0, 3.0],
+            vec![4.0, 5.0, 6.0],
+            vec![7.0, 8.0, 9.0],
+        ];
+        let expected_result = vec![
+            vec![1.0, 1.1428571428571428, 1.2857142857142858],
+            vec![0.0, 1.0, 1.9999999999999998],
+            vec![-0.0, -0.0, 1.0],
+        ];
+        let actual_result = gauss_elimination(&matrix);
+        assert_eq!(expected_result, actual_result);
+    }
 }
