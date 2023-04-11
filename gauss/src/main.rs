@@ -1,12 +1,30 @@
+use bencher::{rayon::*, THREAD_COUNT};
+use common::generate_square_matrix;
 use gauss::gauss_elimination;
 
-fn main() {
-    let matrix = vec![
-        vec![1.0, 2.0, 3.0],
-        vec![4.0, 5.0, 6.0],
-        vec![7.0, 8.0, 9.0],
-    ];
+const MATRIX_SIZE: usize = 1000;
+const REPEAT_COUNT: i32 = 2;
 
-    let result = gauss_elimination(&matrix);
-    println!("{:?}", result);
+fn main() {
+    let matrix = &generate_square_matrix::<f64>(MATRIX_SIZE, 1.0..10_000.0);
+
+    let single_threaded_result = bench_single_threaded(
+        move || {
+            gauss_elimination(matrix);
+        },
+        REPEAT_COUNT,
+    );
+
+    println!("{}\n", single_threaded_result);
+    for thread_count in THREAD_COUNT {
+        let bench_result = bench(
+            move || {
+                gauss_elimination(matrix);
+            },
+            thread_count,
+            REPEAT_COUNT,
+            &single_threaded_result,
+        );
+        println!("{}\n", bench_result);
+    }
 }
