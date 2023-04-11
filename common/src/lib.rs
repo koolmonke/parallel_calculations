@@ -1,11 +1,13 @@
+pub mod matrix;
+
 use std::ops::Range;
 
+use matrix::Matrix;
 use rand::{
     distributions::{uniform::SampleUniform, Uniform},
     prelude::Distribution,
     thread_rng,
 };
-
 use rayon::prelude::*;
 
 pub fn generate_vector<T>(n: usize, range: &Range<T>) -> Vec<T>
@@ -25,7 +27,7 @@ where
     v
 }
 
-pub fn generate_square_matrix<T>(n: usize, range: Range<T>) -> Vec<Vec<T>>
+pub fn generate_square_matrix<T>(n: usize, range: Range<T>) -> Matrix<T>
 where
     <T as SampleUniform>::Sampler: Sync,
     T: SampleUniform + Send + Sync + Copy,
