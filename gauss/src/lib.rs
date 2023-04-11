@@ -25,7 +25,7 @@ pub fn gauss_elimination(matrix: &Matrix<f64>) -> Matrix<f64> {
             panic!("Singular matrix");
         }
 
-        result[i] = result[i].par_iter().map(|&x| x / pivot).collect();
+        result[i].par_iter_mut().for_each(|x| *x /= pivot);
 
         for j in (i + 1)..n {
             let factor = result[j][i] / result[i][i];
