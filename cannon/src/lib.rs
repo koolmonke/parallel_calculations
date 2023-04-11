@@ -1,6 +1,7 @@
+use common::matrix::Matrix;
 use rayon::prelude::*;
 
-fn compute_row_of_sums_rayon(a_row: &Vec<f64>, b: &Vec<Vec<f64>>, n: usize) -> Vec<f64> {
+fn compute_row_of_sums_rayon(a_row: &Vec<f64>, b: &Matrix<f64>, n: usize) -> Vec<f64> {
     let mut unordered_columns = (0..n)
         .into_par_iter()
         .map(|j| (j, (0..n).map(|k| a_row[k] * b[k][j]).sum()))
@@ -15,7 +16,7 @@ fn compute_row_of_sums_rayon(a_row: &Vec<f64>, b: &Vec<Vec<f64>>, n: usize) -> V
         .collect()
 }
 
-pub fn multiply(a: &Vec<Vec<f64>>, b: &Vec<Vec<f64>>) -> Vec<Vec<f64>> {
+pub fn multiply(a: &Matrix<f64>, b: &Matrix<f64>) -> Matrix<f64> {
     let n = b.len();
 
     let mut unordered_rows = (0..n)
@@ -31,4 +32,18 @@ pub fn multiply(a: &Vec<Vec<f64>>, b: &Vec<Vec<f64>>) -> Vec<Vec<f64>> {
         .par_sort_by(|(left_size, _left), (right_size, _right)| left_size.cmp(right_size));
 
     unordered_rows.into_iter().map(|(_, row)| row).collect()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_multiply_matrices() {
+        let a = vec![vec![1.0, 2.0], vec![3.0, 4.0]];
+        let b = vec![vec![5.0, 6.0], vec![7.0, 8.0]];
+        let expected_result = vec![vec![19.0, 22.0], vec![43.0, 50.0]];
+        let actual_result = multiply(&a, &b);
+        assert_eq!(expected_result, actual_result);
+    }
 }
