@@ -22,7 +22,7 @@ where
     let mut v = Vec::with_capacity(n);
     (0..n)
         .into_par_iter()
-        .map(|_| between.sample(&mut thread_rng()))
+        .map_init(|| thread_rng(), |rng, _| between.sample(rng))
         .collect_into_vec(&mut v);
     v
 }
