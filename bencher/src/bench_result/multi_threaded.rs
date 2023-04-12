@@ -26,10 +26,10 @@ impl Display for BenchResultMultiThreaded {
             "Время выполнения: {:.3} секунд",
             self.duration.as_secs_f64()
         )?;
-        writeln!(f, "Кол-во выполнений {}", self.repeat_count)?;
+        writeln!(f, "Кол-во выполнений: {}", self.repeat_count)?;
         writeln!(
             f,
-            "Среднее время выполнение {:.3} секунд",
+            "Среднее время выполнение: {:.3} секунд",
             self.duration.as_secs_f64() / (self.repeat_count as f64)
         )?;
 
