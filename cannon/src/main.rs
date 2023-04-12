@@ -2,7 +2,7 @@ use bencher::rayon::*;
 use cannon::multiply;
 use common::generate_square_matrix;
 
-const MATRIX_SIZE: usize = 1000;
+const MATRIX_SIZE: usize = 800;
 const REPEAT_COUNT: i32 = 5;
 
 fn main() {
