@@ -1,0 +1,5 @@
+# parallel_calculations
+
+* [x] Scalar of 2 vectors
+* [x] Cannon Matrix Multiplication
+* [ ] Gauss Method
