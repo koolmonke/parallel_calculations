@@ -1,7 +1,4 @@
-use bencher::{
-    rayon::{bench, bench_single_threaded},
-    THREAD_COUNT,
-};
+use bencher::rayon::{bench, bench_single_threaded};
 use common::generate_vector;
 use scalars_of_vectors::scalar;
 
@@ -20,7 +17,7 @@ fn main() {
     );
 
     println!("{}\n", single_threaded_result);
-    for thread_count in THREAD_COUNT {
+    for thread_count in [4, 8, 16] {
         let bench_result = bench(
             move || {
                 scalar(a, b);

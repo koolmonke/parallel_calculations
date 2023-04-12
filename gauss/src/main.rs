@@ -1,9 +1,9 @@
-use bencher::{rayon::*, THREAD_COUNT};
+use bencher::rayon::*;
 use common::{generate_square_matrix, generate_vector};
 use gauss::gaussian_elimination;
 
 const MATRIX_SIZE: usize = 2000;
-const REPEAT_COUNT: i32 = 2;
+const REPEAT_COUNT: i32 = 5;
 
 fn main() {
     let matrix = &generate_square_matrix::<f64>(MATRIX_SIZE, 1.0..10_000.0);
@@ -17,7 +17,7 @@ fn main() {
     );
 
     println!("{}\n", single_threaded_result);
-    for thread_count in THREAD_COUNT {
+    for thread_count in [4, 8, 16] {
         let bench_result = bench(
             move || {
                 gaussian_elimination(matrix, vector);
