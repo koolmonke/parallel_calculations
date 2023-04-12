@@ -6,9 +6,9 @@ pub fn gaussian_elimination(matrix: &[Vec<f64>], b: &[f64]) -> Vec<f64> {
     let mut augmented_matrix: Vec<Vec<f64>> = matrix
         .iter()
         .zip(b.iter())
-        .map(|(row, &bi)| {
+        .map(|(row, &b_i)| {
             let mut augmented_row = row.clone();
-            augmented_row.push(bi);
+            augmented_row.push(b_i);
             augmented_row
         })
         .collect();
@@ -17,6 +17,7 @@ pub fn gaussian_elimination(matrix: &[Vec<f64>], b: &[f64]) -> Vec<f64> {
         let pivot = augmented_matrix[k][k];
         for i in k + 1..n {
             let factor = augmented_matrix[i][k] / pivot;
+
             for j in k..=n {
                 augmented_matrix[i][j] -= factor * augmented_matrix[k][j];
             }
