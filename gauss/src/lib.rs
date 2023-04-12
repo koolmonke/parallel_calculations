@@ -1,43 +1,39 @@
-use common::matrix::Matrix;
 use rayon::prelude::*;
-use std::cmp::Ordering;
 
-pub fn gauss_elimination(matrix: &Matrix<f64>) -> Matrix<f64> {
-    let mut result = matrix.clone();
-    let n = result.len();
+pub fn gaussian_elimination(matrix: &[Vec<f64>], b: &[f64]) -> Vec<f64> {
+    let n = matrix.len();
 
-    for i in 0..n {
-        let max_row = (i..n)
-            .max_by_key(|&row| {
-                result[row][i]
-                    .abs()
-                    .partial_cmp(&result[i][i].abs())
-                    .unwrap_or(Ordering::Equal)
-            })
-            .unwrap();
-        if max_row != i {
-            result.swap(i, max_row);
-        }
+    let mut augmented_matrix: Vec<Vec<f64>> = matrix
+        .iter()
+        .zip(b.iter())
+        .map(|(row, &bi)| {
+            let mut augmented_row = row.clone();
+            augmented_row.push(bi);
+            augmented_row
+        })
+        .collect();
 
-        let pivot = result[i][i];
-
-        if pivot.abs() <= f64::EPSILON {
-            panic!("Singular matrix");
-        }
-
-        result[i].iter_mut().for_each(|x| *x /= pivot);
-
-        for j in (i + 1)..n {
-            let factor = result[j][i] / result[i][i];
-            result[j] = result[j]
-                .iter()
-                .zip(result[i].iter())
-                .map(|(&x, &y)| x - y * factor)
-                .collect();
+    for k in 0..n {
+        let pivot = augmented_matrix[k][k];
+        for i in k + 1..n {
+            let factor = augmented_matrix[i][k] / pivot;
+            for j in k..=n {
+                augmented_matrix[i][j] -= factor * augmented_matrix[k][j];
+            }
         }
     }
 
-    result
+    let mut x: Vec<f64> = vec![0.0; n];
+    for i in (0..n).rev() {
+        let sum: f64 = augmented_matrix[i][((i + 1)..n)]
+            .par_iter()
+            .zip(x[(i + 1)..n].par_iter())
+            .map(|(j, x_j)| j * x_j)
+            .sum();
+        x[i] = (augmented_matrix[i][n] - sum) / augmented_matrix[i][i];
+    }
+
+    x
 }
 
 #[cfg(test)]
@@ -45,18 +41,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_gauss() {
-        let matrix = vec![
-            vec![1.0, 2.0, 3.0],
-            vec![4.0, 5.0, 6.0],
-            vec![7.0, 8.0, 9.0],
+    fn test_gaussian_elimination() {
+        let a = vec![
+            vec![2.0, 1.0, -1.0],
+            vec![-3.0, -1.0, 2.0],
+            vec![-2.0, 1.0, 2.0],
         ];
-        let expected_result = vec![
-            vec![1.0, 1.1428571428571428, 1.2857142857142858],
-            vec![0.0, 1.0, 1.9999999999999998],
-            vec![-0.0, -0.0, 1.0],
-        ];
-        let actual_result = gauss_elimination(&matrix);
-        assert_eq!(expected_result, actual_result);
+        let b = vec![8.0, -11.0, -3.0];
+        let expected_x = vec![2.0, 3.0, -1.0];
+        let x = gaussian_elimination(&a, &b);
+        assert_eq!(x, expected_x);
     }
 }
