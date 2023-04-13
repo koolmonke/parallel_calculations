@@ -11,8 +11,8 @@ pub struct Statistics {
 impl From<Vec<Duration>> for Statistics {
     fn from(value: Vec<Duration>) -> Self {
         let total_time: Duration = value.iter().sum();
-        let average_time = Duration::from_secs_f64(total_time.as_secs_f64() / (value.len() as f64));
         let repeat_count = value.len();
+        let average_time = total_time / (repeat_count as u32);
 
         let mid = repeat_count / 2;
         let median = if repeat_count % 2 == 0 {
