@@ -22,6 +22,6 @@ impl Display for BenchResultSingleThreaded {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         writeln!(f, "1 поток")?;
 
-        writeln!(f, "{}", self.stats)
+        write!(f, "{}", self.stats)
     }
 }
