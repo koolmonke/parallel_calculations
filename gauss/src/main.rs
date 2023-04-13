@@ -1,4 +1,4 @@
-use bencher::{generate_bench, rayon::*};
+use bencher::generate_bench;
 use common::{generate_square_matrix, generate_vector};
 use gauss::gaussian_elimination;
 

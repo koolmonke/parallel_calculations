@@ -1,4 +1,4 @@
-use bencher::{generate_bench, rayon::*};
+use bencher::generate_bench;
 use cannon::multiply;
 use common::generate_square_matrix;
 

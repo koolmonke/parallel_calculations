@@ -1,4 +1,4 @@
-use bencher::{generate_bench, rayon::*};
+use bencher::generate_bench;
 use common::generate_vector;
 use scalars_of_vectors::scalar;
 

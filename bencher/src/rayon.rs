@@ -51,7 +51,7 @@ pub fn bench<F: Fn() + Send + Sync>(
 #[macro_export]
 macro_rules! generate_bench {
     ($repeat_count:expr, $thread_counts:expr, $bench_fn:ident, $($rest:tt)*) => {{
-        let single_threaded_result = bench_single_threaded(
+        let single_threaded_result = bencher::rayon::bench_single_threaded(
             move || {
                 $bench_fn($($rest)*);
             },
@@ -60,7 +60,7 @@ macro_rules! generate_bench {
 
         println!("{}\n", single_threaded_result);
         for thread_count in $thread_counts {
-            let bench_result = bench(
+            let bench_result = bencher::rayon::bench(
                 move || {
                     $bench_fn($($rest)*);
                 },
