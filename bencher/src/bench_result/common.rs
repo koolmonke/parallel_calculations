@@ -1,7 +1,4 @@
-use std::{
-    hint::black_box,
-    time::{Duration, Instant},
-};
+use std::time::{Duration, Instant};
 
 use rayon::{ThreadPool, ThreadPoolBuilder};
 
@@ -14,7 +11,7 @@ fn make_pool(num_threads: usize) -> ThreadPool {
 
 fn get_duration<F: FnOnce()>(f: F) -> Duration {
     let instant = Instant::now();
-    black_box(f());
+    f();
     instant.elapsed()
 }
 
