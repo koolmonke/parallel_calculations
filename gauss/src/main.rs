@@ -8,5 +8,5 @@ fn main() {
     let a = &generate_square_matrix::<f64>(MATRIX_SIZE, 1.0..10_000.0);
     let b = &generate_vector::<f64>(MATRIX_SIZE, &(1.0..10_000.0));
 
-    generate_bench!(2, [4, 8, 16], gaussian_elimination, a, b)
+    generate_bench!(2, [4, 8, 16], gaussian_elimination, a, b);
 }
