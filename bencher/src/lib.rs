@@ -1,3 +1,2 @@
 pub mod bench_result;
-mod common;
-pub mod rayon;
+pub mod macros;
