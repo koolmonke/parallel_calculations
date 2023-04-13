@@ -7,7 +7,8 @@ pub fn gaussian_elimination(matrix: &[Vec<f64>], b: &[f64]) -> Vec<f64> {
         .iter()
         .zip(b.iter())
         .map(|(row, &b_i)| {
-            let mut augmented_row = row.clone();
+            let mut augmented_row = Vec::with_capacity(row.len() + 1);
+            augmented_row.clone_from(row);
             augmented_row.push(b_i);
             augmented_row
         })
