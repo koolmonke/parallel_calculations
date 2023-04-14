@@ -8,8 +8,8 @@ pub struct Statistics {
     pub median: Duration,
 }
 
-impl From<Vec<Duration>> for Statistics {
-    fn from(value: Vec<Duration>) -> Self {
+impl From<&Vec<Duration>> for Statistics {
+    fn from(value: &Vec<Duration>) -> Self {
         let total_time: Duration = value.iter().sum();
         let repeat_count = value.len();
         let average_time = total_time / (repeat_count as u32);
@@ -27,6 +27,12 @@ impl From<Vec<Duration>> for Statistics {
             average_time,
             median,
         }
+    }
+}
+
+impl From<Vec<Duration>> for Statistics {
+    fn from(value: Vec<Duration>) -> Self {
+        Statistics::from(&value)
     }
 }
 

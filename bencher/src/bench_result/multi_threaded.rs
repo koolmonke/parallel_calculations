@@ -17,7 +17,7 @@ impl BenchResultMultiThreaded {
         repeat_count: usize,
         single_threaded_result: &BenchResultSingleThreaded,
     ) -> BenchResultMultiThreaded {
-        let stats: Statistics = bench_rayon(&f, thread_count, repeat_count).into();
+        let stats = Statistics::from(bench_rayon(&f, thread_count, repeat_count));
 
         let speedup =
             single_threaded_result.stats.total_time.as_secs_f64() / stats.total_time.as_secs_f64();
