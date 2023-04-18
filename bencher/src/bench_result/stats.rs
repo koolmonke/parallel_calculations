@@ -13,12 +13,11 @@ impl From<&Vec<Duration>> for Statistics {
         let total_time: Duration = value.iter().sum();
         let repeat_count = value.len();
         let average_time = total_time / (repeat_count as u32);
-
         let mid = repeat_count / 2;
         let median = if repeat_count % 2 == 0 {
-            value[mid]
+            (value[mid - 1] + value[mid]) / 2
         } else {
-            (value[mid] + value[mid + 1]) / 2
+            value[mid]
         };
 
         Statistics {
