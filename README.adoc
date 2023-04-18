@@ -1,5 +1,5 @@
-# parallel_calculations
+# Лабораторные работы по Параллельным Вычислениям 
 
-* [x] Scalar of 2 vectors
-* [x] Cannon Matrix Multiplication
-* [ ] Gauss Method
+- [x] Скалярное умножение
+- [x] Метод Кэннона
+- [ ] Метод Гаусса
