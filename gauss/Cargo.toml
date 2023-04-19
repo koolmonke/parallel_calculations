@@ -8,4 +8,5 @@ edition = "2021"
 [dependencies]
 rayon = "1.7.0"
 bencher = { path = "../bencher" }
-common = { path = "../common" }
+cannon = { path = "../cannon" }
+scalars_of_vectors = { path = "../scalars_of_vectors" }

@@ -1,6 +1,7 @@
 use bencher::generate_bench;
-use common::{generate_square_matrix, generate_vector};
+use cannon::generate_square_matrix;
 use gauss::gaussian_elimination;
+use scalars_of_vectors::generate_vector;
 
 const MATRIX_SIZE: usize = 2000;
 

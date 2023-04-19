@@ -1,5 +1,26 @@
-use common::matrix::Matrix;
+use std::ops::Range;
+
 use rayon::prelude::*;
+
+use rand::distributions::uniform::SampleUniform;
+use scalars_of_vectors::generate_vector;
+
+pub fn generate_square_matrix<T>(n: usize, range: Range<T>) -> Matrix<T>
+where
+    <T as SampleUniform>::Sampler: Sync,
+    T: SampleUniform + Send + Sync + Copy,
+{
+    let mut matrix = Vec::with_capacity(n);
+
+    (0..n)
+        .into_par_iter()
+        .map(|_| generate_vector(n, &range))
+        .collect_into_vec(&mut matrix);
+
+    matrix
+}
+
+pub type Matrix<T> = Vec<Vec<T>>;
 
 fn compute_row_of_sums_rayon(a_row: &Vec<f64>, b: &Matrix<f64>, n: usize) -> Vec<f64> {
     let mut unordered_columns = (0..n)

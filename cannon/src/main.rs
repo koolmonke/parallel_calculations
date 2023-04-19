@@ -1,6 +1,5 @@
 use bencher::generate_bench;
-use cannon::multiply;
-use common::generate_square_matrix;
+use cannon::{generate_square_matrix, multiply};
 
 const MATRIX_SIZE: usize = 800;
 
