@@ -1,4 +1,4 @@
-use std::thread::{self};
+use std::thread;
 
 fn thread_worker(name: &str) {
     println!("Привет {}! Из потока {:?}", name, thread::current().id());
