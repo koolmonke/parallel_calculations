@@ -3,7 +3,7 @@ use std::ops::Range;
 use rayon::prelude::*;
 
 use rand::distributions::uniform::SampleUniform;
-use scalars_of_vectors::generate_vector;
+use scalar::generate_vector;
 
 pub fn generate_square_matrix<T>(n: usize, range: Range<T>) -> Matrix<T>
 where

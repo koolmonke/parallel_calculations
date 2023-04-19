@@ -1,5 +1,5 @@
 use bencher::generate_bench;
-use scalars_of_vectors::{generate_vector, scalar};
+use scalar::{generate_vector, scalar};
 
 const VECTOR_SIZE: usize = 200_000_000;
 

@@ -1,5 +1,5 @@
 [package]
-name = "scalars_of_vectors"
+name = "scalar"
 version = "0.1.0"
 edition = "2021"
 

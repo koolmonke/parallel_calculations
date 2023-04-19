@@ -9,4 +9,4 @@ edition = "2021"
 rayon = "1.7.0"
 rand = "0.8.5"
 bencher = { path = "../bencher" }
-scalars_of_vectors = { path = "../scalars_of_vectors" }
+scalar = { path = "../scalar" }

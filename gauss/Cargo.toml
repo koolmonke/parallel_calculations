@@ -9,4 +9,4 @@ edition = "2021"
 rayon = "1.7.0"
 bencher = { path = "../bencher" }
 cannon = { path = "../cannon" }
-scalars_of_vectors = { path = "../scalars_of_vectors" }
+scalar = { path = "../scalar" }
